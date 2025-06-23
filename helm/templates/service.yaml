@@ -11,5 +11,5 @@ spec:
     app: {{ include "helm.fullname" . }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
 {{- end }}
