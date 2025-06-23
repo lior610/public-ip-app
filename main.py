@@ -1,0 +1,22 @@
+from flask import Flask
+import requests
+
+PUBLIC_IP_URL = 'https://api.ipify.org?format=json'
+
+app = Flask(__name__)
+
+def get_ip_address():
+    res = requests.get(PUBLIC_IP_URL)
+    if res.status_code == 200:
+        print(f"Fetched IP address successfully: {res.json()}")
+        return res.json().get('ip')
+    else:
+        return 'Unable to fetch IP address'
+
+@app.route('/')
+def index():
+    return f'<h1>Your public IP address is: {get_ip_address()}</h1>'
+
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)
