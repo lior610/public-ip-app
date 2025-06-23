@@ -1,13 +1,8 @@
 name: CI Pipeline for public-ip app using flask and docker
 on:
-  push:
-    branches:
-      - main
-      - cicd
   pull_request:
     branches:
       - main
-      - cicd
 
 jobs:
   build:
