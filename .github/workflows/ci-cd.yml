@@ -43,5 +43,5 @@ jobs:
           git config --global user.name "GitHub Actions"
           git add helm/values.yaml
           git commit -m "Update image tag to ${{ github.run_number }} in helm/values.yaml"
-          git push
+          git push origin main
           
