@@ -28,12 +28,17 @@ jobs:
           tags: |
             lior610/public-ip:stable
             lior610/public-ip:${{ github.run_number }}
-      
-      - name: Save image tag to file
-        run: echo "${{ github.run_number }}" > image-tag.txt
-        
-      - name: Upload image tag as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: image-tag
-          path: image-tag.txt
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Update image tag and deploy to ArgoCD
+        run: |
+          sed -i "s/tag:.*/tag: ${{ github.run_number }}/" helm/values.yaml
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add helm/values.yaml
+          git commit -m "Update image tag to ${{ github.run_number }} in helm/values.yaml"
+          git push
+          
