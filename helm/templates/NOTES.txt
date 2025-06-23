@@ -5,7 +5,7 @@
 
 Deployment Info
 - Deployment name: {{ $fullname }}
-- Image used: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+- Image used: {{ .Values.image.repository }}:{{ .Values.image.tag | default "stable" }}
 - Namespace: {{ .Release.Namespace }}
 
 
