@@ -1,0 +1,23 @@
+name: CD Pipeline for public-ip app that deploys to argo-cd
+on:
+  workflow_run:
+    workflows: ["CI Pipeline for public-ip app using flask and docker"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update image tag and deploy to ArgoCD
+        run: |
+          sed -i "s/tag:.*/tag: ${{ github.run_number }}/" helm/values.yaml
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add helm/values.yaml
+          git commit -m "Update image tag to ${{ github.run_number }} in helm/values.yaml"
+          git push origin cicd
+          
