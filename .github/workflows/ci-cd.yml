@@ -1,4 +1,4 @@
-name: CI Pipeline for public-ip app using flask and docker
+name: CI-CD Pipeline for public-ip app using flask and docker on argo-cd
 on:
   pull_request:
     branches:
