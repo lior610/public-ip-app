@@ -28,6 +28,9 @@ jobs:
           tags: |
             lior610/public-ip:stable
             lior610/public-ip:${{ github.run_number }}
+      
+      - name: Save image tag to file
+        run: echo "${{ github.run_number }}" > image-tag.txt
         
       - name: Upload image tag as artifact
         uses: actions/upload-artifact@v4
