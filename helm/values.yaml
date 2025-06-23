@@ -1,0 +1,17 @@
+replicaCount: 3
+
+image:
+  repository: lior610/public-ip
+  tag: latest
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 5000
+
+ingress:
+  enabled: true
+  hostname:
+    enabled: false
+  path: /
+  servicePort: 5000
