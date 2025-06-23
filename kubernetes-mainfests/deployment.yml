@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: public-ip-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: public-ip-app
+  template:
+    metadata:
+      labels:
+        app: public-ip-app
+    spec:
+      containers:
+        - name: flask-public-ip
+          image: lior610/public-ip:latest
+          ports:
+            - containerPort: 5000
+          # resources:
+          #   requests:
+          #     cpu: 250m
+          #     memory: 10Mi
+          #   limits:
+          #     cpu: 500m
+          #     memory: 20Mi
+      # nodeSelector:
+      #   disk: hdd
