@@ -33,6 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Update image tag and deploy to ArgoCD
         run: |
           sed -i "s/tag:.*/tag: ${{ github.run_number }}/" helm/values.yaml
