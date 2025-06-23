@@ -8,7 +8,6 @@ app = Flask(__name__)
 def get_ip_address():
     res = requests.get(PUBLIC_IP_URL)
     if res.status_code == 200:
-        print(f"Fetched IP address successfully: {res.json()}")
         return res.json().get('ip')
     else:
         return 'Unable to fetch IP address'
