@@ -1,0 +1,34 @@
+{{- $fullname := include "helm.fullname" . -}}
+{{- $svc := (index .Values.service "name" | default $fullname) -}}
+
+{{ .Chart.Name }} has been successfully deployed!
+
+Deployment Info
+- Deployment name: {{ $fullname }}
+- Image used: {{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}
+- Namespace: {{ .Release.Namespace }}
+
+
+{{- if .Values.service.enabled }}
+Service Info
+- Service name: {{ $svc }}
+- Type: {{ default "ClusterIP" .Values.service.type }}
+- Port(s):
+  - {{ .Values.service.port }} → {{ .Values.service.targetPort }}
+{{- end }}
+
+
+{{- if .Values.ingress.enabled }}
+Ingress Info
+  {{- if .Values.ingress.hostname.enabled }}
+  Host: http://{{ .Values.ingress.hostname.name }}
+  {{- end}}
+  Path: {{ .Values.ingress.path }}
+{{- else }}
+Ingress is not enabled.
+{{- end }}
+
+Release name: {{ .Release.Name }}
+
+You can run the following command to see the status of the release:
+helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
