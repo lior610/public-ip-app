@@ -19,7 +19,7 @@ The Helm chart includes the following objects:
 
 ---
 
-## ⚙️ CI/CD Pipeline (GitHub Actions)
+## CI/CD Pipeline (GitHub Actions)
 
 The pipeline is defined in [`.github/workflows/ci-cd.yml`](./.github/workflows/ci-cd.yml).  
 It consists of the following steps:
@@ -38,7 +38,7 @@ It consists of the following steps:
 
 ---
 
-## 🌍 App Access
+## App Access
 
 The app exposes the following endpoints:
 
