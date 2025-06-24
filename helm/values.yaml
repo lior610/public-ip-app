@@ -6,13 +6,12 @@ image:
 
 service:
   enabled: true
-  type: NodePort
+  type: ClusterIP
   port: 5000
   targetPort: 5000
-  nodePort: 30000
 
 ingress:
-  enabled: false
+  enabled: true
   hostname:
     enabled: false
   path: /
