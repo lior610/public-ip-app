@@ -12,7 +12,7 @@ def get_client_ip_address():
 
 @app.route('/')
 def index():
-    return f'<h1>Your public IP address is: {get_client_ip_address()}</h1>'
+    return f'<h1>Your public IP address is:bla bla</h1>'
 
 @app.route('/json')
 def json_response():
