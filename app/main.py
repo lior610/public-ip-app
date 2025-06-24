@@ -16,10 +16,11 @@ def get_client_ip_address():
     x_forwarded_for = request.headers.get('X-Forwarded-For')
     print(x_forwarded_for)
     if x_forwarded_for:
-        # Multiple IPs can appear if behind multiple proxies
         ip = x_forwarded_for.split(',')[0].strip()
+        print(f"Client IP from X-Forwarded-For: {ip}")
     else:
         ip = request.remote_addr
+        print(f"Client IP from remote_addr: {ip}")
     return ip
 
 @app.route('/')
