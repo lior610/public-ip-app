@@ -2,7 +2,7 @@ replicaCount: 3
 
 image:
   repository: lior610/public-ip
-  tag: 20
+  tag: 21
 
 service:
   enabled: true
