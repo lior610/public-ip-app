@@ -13,7 +13,13 @@ def get_ip_address():
         return 'Unable to fetch IP address'
     
 def get_client_ip_address():
-    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    x_forwarded_for = request.headers.get('X-Forwarded-For')
+    print(x_forwarded_for)
+    if x_forwarded_for:
+        # Multiple IPs can appear if behind multiple proxies
+        ip = x_forwarded_for.split(',')[0].strip()
+    else:
+        ip = request.remote_addr
     return ip
 
 @app.route('/')
