@@ -5,57 +5,57 @@ on:
       - main
 
 jobs:
-  # unit-test:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./app
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  integrarion-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-  #     - name: Install dependencies
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-  #     - name: Run tests
-  #       run: |
-  #         python -m pytest tests/integration.py
+      - name: Run tests
+        run: |
+          python -m pytest tests/integration.py
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   needs: unit-test
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  build:
+    runs-on: ubuntu-latest
+    needs: integrarion-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
     
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v3
-  #       with:
-  #         username: ${{ secrets.DOCKER_USERNAME }}
-  #         password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-  #     - name: Build and push Docker image
-  #       uses: docker/build-push-action@v5
-  #       with:
-  #         context: .
-  #         push: true
-  #         tags: |
-  #           lior610/public-ip:stable
-  #           lior610/public-ip:${{ github.run_number }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            lior610/public-ip:stable
+            lior610/public-ip:${{ github.run_number }}
 
   lint:
     runs-on: ubuntu-latest
-    # needs: build
+    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -65,21 +65,21 @@ jobs:
           CHART_LOCATION: ./helm/
           CHART_VALUES: ./helm/values.yaml 
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  deploy:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Update image tag and deploy to ArgoCD
-  #       run: |
-  #         git fetch origin main
-  #         git checkout main
-  #         sed -i "s/tag:.*/tag: ${{ github.run_number }}/" helm/values.yaml
-  #         git config --global user.email "actions@github.com"
-  #         git config --global user.name "GitHub Actions"
-  #         git add helm/values.yaml
-  #         git commit -m "Update image tag to ${{ github.run_number }} in helm/values.yaml"
-  #         git push origin main
+      - name: Update image tag and deploy to ArgoCD
+        run: |
+          git fetch origin main
+          git checkout main
+          sed -i "s/tag:.*/tag: ${{ github.run_number }}/" helm/values.yaml
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add helm/values.yaml
+          git commit -m "Update image tag to ${{ github.run_number }} in helm/values.yaml"
+          git push origin main
           
