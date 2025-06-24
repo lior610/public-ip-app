@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
     
@@ -16,7 +16,7 @@ def health_check():
 
 @app.route('/')
 def index():
-    return f'<h1>Your public IP address is: {get_client_ip_address()}</h1>'
+    return render_template('index.html', ip=get_client_ip_address())
 
 @app.route('/json')
 def json_response():
