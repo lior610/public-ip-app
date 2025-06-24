@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import requests
 
 PUBLIC_IP_URL = 'https://api.ipify.org?format=json'
@@ -11,10 +11,14 @@ def get_ip_address():
         return res.json().get('ip')
     else:
         return 'Unable to fetch IP address'
+    
+def get_client_ip_address():
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    return ip
 
 @app.route('/')
 def index():
-    return f'<h1>Your public IP address is: {get_ip_address()}</h1>'
+    return f'<h1>Your public IP address is: {get_client_ip_address()}</h1>'
 
 
 if __name__ == '__main__':

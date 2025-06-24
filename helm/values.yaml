@@ -16,3 +16,4 @@ ingress:
     enabled: false
   path: /
   servicePort: 5000
+  className: nginx
