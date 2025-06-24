@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import requests
 
 PUBLIC_IP_URL = 'https://api.ipify.org?format=json'
@@ -23,9 +23,13 @@ def get_client_ip_address():
         print(f"Client IP from remote_addr: {ip}")
     return ip
 
+def get_headers():
+    return dict(request.headers)
+
 @app.route('/')
 def index():
-    return f'<h1>Your public IP address is: {get_client_ip_address()}</h1>'
+    # return f'<h1>Your public IP address is: {get_client_ip_address()}</h1>'
+    return jsonify(get_headers())
 
 
 if __name__ == '__main__':
