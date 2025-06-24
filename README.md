@@ -74,7 +74,7 @@ The app exposes the following endpoints:
    After deploying to the remote k3s cluster, the app returned an internal pod IP (Flannel CIDR).  
    I initially assumed it was related to the Ingress controller and tried various deployment and configMap settings from online sources.  
    Then I checked using a NodePort service and still got the internal IP.  
-   Eventually, I found that setting `externalTrafficPolicy: Local` in the service (or Ingress controller service) preserves the original IP by skipping SNAT — which is ideal for one-node clusters. After that, it worked.
+   Eventually, I found that setting `externalTrafficPolicy: Local` in the service (or Ingress controller service) preserves the original IP by skipping SNAT — which is good for one-node clusters and in larger cluster I would use topology spreads to spread the pods. After that, it worked.
 
 2. **Notifications via email are hard to implement in GitHub Actions**
 
