@@ -4,6 +4,7 @@ kind: Ingress
 metadata:
   name: {{ include "helm.fullname" . }}
 spec:
+  ingressClassName: {{ .Values.ingress.className | default "nginx" }}
   rules:
   - {{ if .Values.ingress.hostname.enabled }}
     host: {{ .Values.ingress.hostname.name }}
