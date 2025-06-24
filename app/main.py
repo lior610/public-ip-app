@@ -28,8 +28,8 @@ def get_headers():
 
 @app.route('/')
 def index():
-    # return f'<h1>Your public IP address is: {get_client_ip_address()}</h1>'
-    return jsonify(get_headers())
+    return f'<h1>Your public IP address is: {get_client_ip_address()}</h1>'
+    # return jsonify(get_headers())
 
 
 if __name__ == '__main__':
